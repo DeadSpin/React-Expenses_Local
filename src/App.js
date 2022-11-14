@@ -1,25 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import './App.css'
+import ExpenseData from './ExpenseData'
+import Expenses from './components/Expenses/Expenses';
+import NewExpenses from './components/NewExpensesForm/NewExpenses';
 
-function App() {
+/**
+ * 
+ * You can also define function as basic
+ * function App() {} both are same just JS syntax change
+ */
+
+const App = () => {
+
+  const [expenses, setExpenses] = useState(ExpenseData.expenses)
+  const saveNewExpenseData = newExpense => {
+    setExpenses(prevState => {
+      return [ newExpense, ...prevState ]
+    })
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewExpenses onAddNewExpenseData={saveNewExpenseData} />
+      <Expenses items={expenses} />
     </div>
-  );
+  )
 }
 
 export default App;
